@@ -1,0 +1,33 @@
+#JAMS configuration file
+#Mon Nov 25 22:11:52 CET 2019
+progressfilename=
+infolog=
+libs=components;C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\models\\nbprojects\\J2K_Irstea\\dist\\J2K_Irstea.jar;C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\models\\nbprojects\\J2Kg\\dist\\J2Kg.jar;C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\models\\nbprojects\\J2K_ext\\dist\\J2K_ext.jar;C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\models\\nbprojects\\J2K_base\\dist\\J2K_base.jar;C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\jams\\trunk\\nbprojects\\jams-common\\dist\\jams-common.jar;C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\jams\\trunk\\nbprojects\\jams-components\\dist\\jams-components.jar
+guiconfig=true
+docbook-home=docbook
+debugmode=false
+model=
+charset=
+username=
+explorerdigits=8
+progressperiod=-1
+profiling=false
+defaultworkspace=true
+windowenable=true
+errordlg=true
+maxlibclasses=10000
+windowontop=false
+windowheight=600
+autosavelogs=true
+verbose=false
+maxrecentfiles=5
+recentfiles=C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\modeldata\\J2K_Ardeche_IH2\\J2K_Meyras_20191125_OPTAS2.jam|C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\modeldata\\J2K_Ardeche_IH2\\J2K_Meyras_20191125_OPTAS.jam|C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\modeldata\\J2K_Ardeche_IH2\\J2K_Meyras_20191125_OPTAS_SAVED.jam|C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\modeldata\\J2K_Ardeche_IH2\\J2K_Meyras_20191125.jam|C\:\\Users\\ivan.horner\\Documents\\Forges\\jams\\modeldata\\J2K_Ardeche_IH2\\J2K_Meyras_Natural_V1.0_SAjam
+autosaveparams=true
+debug=1
+guiconfigheight=600
+windowwidth=900
+guiconfigwidth=600
+preprocessing=true
+errorlog=
+helpbaseurl=
+floatformat=%f

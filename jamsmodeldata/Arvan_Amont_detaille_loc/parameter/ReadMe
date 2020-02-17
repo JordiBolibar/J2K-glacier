@@ -1,0 +1,2 @@
+hrus_old.par : on a constaté que les HRUs (de HRU delin ?!!=) avaient des centroides folkloriques => on a remplacé par
+hrus.par (qui contient les champs x_centroid et y_centroid) calculés à partir du .shp des hrus. 30/09/2016

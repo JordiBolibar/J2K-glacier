@@ -1,0 +1,14 @@
+# soils.par for Rhone by F. Tilmant; based on J2K_Durance model
+SID	aircap	fc_1	fc_2	fc_3	fc_4	fc_5	fc_6	fc_7	fc_8	fc_9	fc_10	fc_11	fc_12	fc_13	fc_14	fc_15	fc_16	fc_17	fc_18	fc_19	fc_20	fc_21	fc_22	fc_23	fc_24	fc_25	fc_26	fc_27	fc_28	fc_29	fc_30
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999	-9999
+n/a	mm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm	mm/dm
+1	250	11.33	11.33	11.33	11.33	11.33	11.33	11.33	11.33	11.33	11.33	11.33	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+2	180	10.77	10.77	10.77	10.77	10.77	10.77	10.77	10.77	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+3	140	10.83	10.83	10.83	10.83	10.83	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+4	130	12.25	12.25	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+#end of soils.par																																					
+1 = depth = 110cm
+2 = depth = 80cm
+3 = depth = 50cm
+4 = depth = 20cm
