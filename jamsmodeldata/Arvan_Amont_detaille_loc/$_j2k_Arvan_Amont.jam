@@ -401,7 +401,7 @@
 			
                 <var attribute="landuseID" context="HRULoop" name="value1"/>
                 <var name="value2" value="222"/>
-                <contextcomponent class="jams.model.JAMSContext" name="GlacierBlock">
+                <contextcomponent class="jams.components.core.Context" name="GlacierBlock">
                     <component class="org.unijena.j2k.snow.SnowEvaporation" name="SnowET1">
                         <var attribute="snowET_G" context="HRULoop" name="snowET"/>
                         <var attribute="actET" context="HRULoop" name="actET"/>
@@ -516,7 +516,7 @@
                         <var name="average" value="true"/>
                     </component-->
                 </contextcomponent>
-				<contextcomponent class="jams.model.JAMSContext" name="NormalBlock">
+				<contextcomponent class="jams.components.core.Context" name="NormalBlock">
 					<component class="interception.J2KProcessInterception_conv_potET" enabled="true" name="J2KProcessInterception3_1" version="1.0_0">
 						<var attribute="snow_trs" context="J2K_optim" name="snow_trs"/>
 						<var attribute="netSnow" context="HRULoop" name="netSnow"/>
