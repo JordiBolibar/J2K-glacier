@@ -87,31 +87,24 @@ import jams.model.*;
             )
             public Attribute.Double slope;
 
-              @JAMSVarDescription(
+         @JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READ,
             description = "attribute elevation"
             )
             public Attribute.Double elevation;
             
-              @JAMSVarDescription(
+         @JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READ,
             description = "Elevation Threshold for debris covered Glacier"
             )
             public Attribute.Double elevationThreshold;
 
         
-             @JAMSVarDescription(
+         @JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READ,
             description = "Slope Threshold for debris covered Glacier"
             )
             public Attribute.Double slopeThreshold;
-
-    @JAMSVarDescription(
-            access = JAMSVarDescription.AccessType.READWRITE,
-            description = "the total precip",
-            unit="L/m^2"
-            )
-            public Attribute.Double precip;
 
     @JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READ,
@@ -222,12 +215,6 @@ import jams.model.*;
 
     @JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READ,
-            description = "day degree factor for snow"
-            )
-            public Attribute.Double ddfSnow;
-
-    @JAMSVarDescription(
-            access = JAMSVarDescription.AccessType.READ,
             description = "day degree factor for ice"
             )
             public Attribute.Double ddfIce;
@@ -307,7 +294,7 @@ import jams.model.*;
         //double glacOut = 0;
 
         double SAC = this.actSlAsCf.getValue();
-
+	getModel().getRuntime().println("Tmean: "+tmean );
 
         double meltTemp = tmean;
 
@@ -329,6 +316,7 @@ import jams.model.*;
 //        double snowMelt = 0;
         double iceMelt = 0;
         double totalMelt = 0;
+	getModel().getRuntime().println("n: "+n );
 
  //if (time.equals(c) && (id.getValue() == 1787)) {
         if ((meltTemp > tbase.getValue()) && (snowStor == 0)) {
@@ -356,7 +344,7 @@ import jams.model.*;
         iceMelt = iceMelt *  SAC;
 
         totalMelt = snowMelt_G.getValue() + iceMelt;
-
+	getModel().getRuntime().println("Total melt: "+totalMelt );
 
     double allIn = snowMelt_G.getValue() + this.rain.getValue();
     //route runoff inside glacier
@@ -378,6 +366,7 @@ import jams.model.*;
         //double tot_q = q_ice + snowMelt_G.getValue();
 
         double tot_q = q_ice + q_snow + q_rain;
+	getModel().getRuntime().println("Total Q: "+tot_q );
 //q_ice should not be included in the balance, since it is not provided as input. otherwise, waterbalnce is wrong
         
         //this.glacStorage.setValue(glacStorage.getValue()+ allIn - q_ice - q_snow - q_rain); //why is q_ice missing in that calculation??//water balance is wrong
@@ -409,7 +398,7 @@ import jams.model.*;
 
         //this.snowTotSWE.setValue(snowStor);
        // this.precip.setValue(this.precip.getValue()*this.area.getValue());
-       double precip = this.precip.getValue();
+       //double precip = this.precip.getValue();
       //  this.massBalance.setValue(glacIn - glacOut);
       //  this.snow.setValue(in_snow);
       //  this.rain.setValue(in_rain);
