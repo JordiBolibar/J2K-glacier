@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<model author="Francois Tilmant" date="2014-03-06 00:00" helpbaseurl="http://jams.uni-jena.de/jamswiki" name="J2K_optim" version="3.8">
+<model author="Francois Tilmant" date="2014-03-06 00:00" helpbaseurl="http://jams.uni-jena.de/jamswiki" name="J2K_optim" version="3.11">
     <description><![CDATA[The standard J2K hydrological model]]></description>
     <var name="workspaceDirectory" value=""/>
     <launcher>
@@ -32,6 +32,15 @@
                 <attribute id="snowTotSWE"/>
                 <attribute id="reachStation"/>
                 <attribute id="catchmentSimRunoff"/>
+                <attribute id="glacierRunoff"/>
+                <attribute id="catchmentRD1"/>
+                <attribute id="catchmentRD1_qm"/>
+                <attribute id="catchmentRD2"/>
+                <attribute id="catchmentRD2_qm"/>
+                <attribute id="catchmentRG1"/>
+                <attribute id="catchmentRG1_qm"/>
+                <attribute id="catchmentRG2"/>
+                <attribute id="catchmentRG2_qm"/>
             </trace>
         </outputdatastore>
         <outputdatastore context="ReachLoop" enabled="false" name="ReachLoop">
@@ -427,13 +436,13 @@
                         <var name="debrisFactor" value="3"/>
                         <var attribute="rainRunofftm1" context="HRULoop" name="rainRunofftm1"/>
                         <var attribute="glacStorage" context="HRULoop" name="glacStorage"/>
+                        <var attribute="elevation" context="HRULoop" name="elevation"/>
                         <var attribute="area" context="HRULoop" name="area"/>
                         <var attribute="rain" context="HRULoop" name="rain"/>
                         <var attribute="iceRunoff" context="HRULoop" name="iceRunoff"/>
                         <var attribute="actSlAsCf" context="HRULoop" name="actSlAsCf"/>
                         <var attribute="snowRunofftm1" context="HRULoop" name="snowRunofftm1"/>
                         <var attribute="glacierRunoff" context="HRULoop" name="glacierRunoff"/>
-			<var attribute="elevation" context="HRULoop" name="elevation"/>
                         <var attribute="tmean" context="HRULoop" name="tmean"/>
                         <var attribute="slope" context="HRULoop" name="slope"/>
                         <var name="elevationThreshold" value="5000"/>
