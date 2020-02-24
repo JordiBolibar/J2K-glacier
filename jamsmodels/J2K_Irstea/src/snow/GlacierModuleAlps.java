@@ -347,6 +347,8 @@ import jams.model.*;
 	getModel().getRuntime().println("Total melt: "+totalMelt );
 
     double allIn = snowMelt_G.getValue() + this.rain.getValue();
+	getModel().getRuntime().println("Snow melt: "+snowMelt_G.getValue() );
+	getModel().getRuntime().println("Snow melt + rain: "+allIn );
     //route runoff inside glacier
     //snow routing
 
@@ -366,6 +368,9 @@ import jams.model.*;
         //double tot_q = q_ice + snowMelt_G.getValue();
 
         double tot_q = q_ice + q_snow + q_rain;
+	getModel().getRuntime().println("Ice Q: "+q_ice );
+	getModel().getRuntime().println("Snow Q: "+q_snow );
+	getModel().getRuntime().println("Rain Q: "+q_rain );
 	getModel().getRuntime().println("Total Q: "+tot_q );
 //q_ice should not be included in the balance, since it is not provided as input. otherwise, waterbalnce is wrong
         
