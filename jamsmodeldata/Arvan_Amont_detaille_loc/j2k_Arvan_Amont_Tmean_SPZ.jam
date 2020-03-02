@@ -41,6 +41,7 @@
                 <attribute id="catchmentRG1_qm"/>
                 <attribute id="catchmentRG2"/>
                 <attribute id="catchmentRG2_qm"/>
+                <attribute id="snowMelt"/>
             </trace>
         </outputdatastore>
         <outputdatastore context="ReachLoop" enabled="false" name="ReachLoop">
@@ -391,14 +392,7 @@
                 <var name="value2" value="7"/>
                 <var attribute="landuseID" context="HRULoop" name="value1"/>
                 <contextcomponent class="jams.components.core.Context" enabled="true" name="GlacierBlock" version="1.0_0">
-                    <component class="org.unijena.j2k.snow.SnowEvaporation" enabled="true" name="SnowET1" version="1.0_0">
-                        <var attribute="snowStorage_G" context="HRULoop" name="swe"/>
-                        <var attribute="actET" context="HRULoop" name="actET"/>
-                        <var name="set_factor" value="0.8"/>
-                        <var attribute="potET" context="HRULoop" name="potET"/>
-                        <var attribute="snowET_G" context="HRULoop" name="snowET"/>
-                    </component>
-                    <component class="snow.J2KProcessSnow_IRSTEA" enabled="true" name="J2KProcessSnow_IRSTEA" version="1.0_0">
+                    <component class="snow.J2KProcessSnow_Glacier" enabled="true" name="J2KProcessSnow_Glacier" version="1.0_0">
                         <var attribute="area" context="HRULoop" name="area"/>
                         <var attribute="totDens" context="HRULoop" name="totDens"/>
                         <var attribute="netRain" context="HRULoop" name="netRain"/>
@@ -412,7 +406,7 @@
                         <var attribute="dryDens" context="HRULoop" name="dryDens"/>
                         <var attribute="snowDepth" context="HRULoop" name="snowDepth"/>
                         <var name="ccf_factor" value="0"/>
-                        <var attribute="snowMelt_G" context="HRULoop" name="snowMelt"/>
+                        <var attribute="snowMelt" context="HRULoop" name="snowMelt"/>
                         <var attribute="snowCover" context="HRULoop" name="snowCover"/>
                         <var attribute="drySWE" context="HRULoop" name="drySWE"/>
                         <var name="r_factor" value="0.0125"/>
@@ -422,11 +416,18 @@
                         <var attribute="snowTotSWE" context="HRULoop" name="snowTotSWE"/>
                         <var name="snowCritDens" value="0.7"/>
                     </component>
-                    <component class="snow.GlacierModuleAlps" enabled="true" name="J2KGlacier" version="1.0_0">
+                    <component class="org.unijena.j2k.snow.SnowEvaporation" enabled="true" name="SnowEvaporationGlacier" version="1.0_0">
+                        <var attribute="snowTotSWE" context="HRULoop" name="swe"/>
+                        <var attribute="actET" context="HRULoop" name="actET"/>
+                        <var name="set_factor" value="0.8"/>
+                        <var attribute="potET" context="HRULoop" name="potET"/>
+                        <var attribute="snowET_G" context="HRULoop" name="snowET"/>
+                    </component>
+                    <component class="snow.GlacierModuleAlps" enabled="true" name="GlacierModuleAlps" version="1.0_0">
                         <var attribute="rainRunoff" context="HRULoop" name="rainRunoff"/>
                         <var name="kSnow" value="5"/>
                         <var attribute="iceRunofftm1" context="HRULoop" name="iceRunofftm1"/>
-                        <var name="slopeThreshold" value="100"/>
+						<var name="slopeThreshold" value="100"/>
                         <var name="meltFactorIce" value="5.891407632 "/>
                         <var name="tempRes" value="d"/>
                         <var name="ddfIce" value="6"/>
@@ -436,7 +437,7 @@
                         <var name="debrisFactor" value="3"/>
                         <var attribute="rainRunofftm1" context="HRULoop" name="rainRunofftm1"/>
                         <var attribute="glacStorage" context="HRULoop" name="glacStorage"/>
-                        <var attribute="elevation" context="HRULoop" name="elevation"/>
+						<var attribute="elevation" context="HRULoop" name="elevation"/>
                         <var attribute="area" context="HRULoop" name="area"/>
                         <var attribute="rain" context="HRULoop" name="rain"/>
                         <var attribute="iceRunoff" context="HRULoop" name="iceRunoff"/>
@@ -445,27 +446,27 @@
                         <var attribute="glacierRunoff" context="HRULoop" name="glacierRunoff"/>
                         <var attribute="tmean" context="HRULoop" name="tmean"/>
                         <var attribute="slope" context="HRULoop" name="slope"/>
-                        <var name="elevationThreshold" value="5000"/>
+						<var name="elevationThreshold" value="5000"/>
+                        <var attribute="snowMelt" context="HRULoop" name="snowMelt"/>
                         <var attribute="snowStorage_G" context="HRULoop" name="snowTotSWE"/>
                         <var name="meltFormula" value="2"/>
-                        <var attribute="snowMelt_G" context="HRULoop" name="snowMelt_G"/>
                     </component>
-                    <component class="j2k_Himalaya.routing.J2KGlacier2ReachRouting" enabled="true" name="J2KG2RRouting" version="1.0_0">
+                    <component class="j2k_Himalaya.routing.J2KGlacier2ReachRouting" enabled="true" name="Glacier2ReachRouting" version="1.0_0">
                         <var attribute="inRD1" context="HRULoop" name="inRD1"/>
                         <var attribute="to_poly" context="HRULoop" name="toPoly"/>
                         <var attribute="reaches" context="J2K_optim" name="reaches"/>
                         <var attribute="to_reach" context="HRULoop" name="toReach"/>
                         <var attribute="glacierRunoff" context="HRULoop" name="glacierRunoff"/>
                     </component>
-                    <component class="org.unijena.j2k.aggregate.WeightedSumAggregator" enabled="true" name="SpatialWeightedSumAggregator11" version="1.0">
+                    <component class="org.unijena.j2k.aggregate.WeightedSumAggregator" enabled="true" name="SpatialAverageAggregator" version="1.0">
                         <var attribute="areaweight" context="HRULoop" name="weight"/>
                         <var attribute="precip;tmean" context="TimeLoop" name="sum"/>
                         <var attribute="precip;tmean" context="HRULoop" name="value"/>
                     </component>
-                    <component class="org.unijena.j2k.aggregate.WeightedSumAggregator" enabled="true" name="SpatialWeightedSumAggregator22" version="1.0">
+                    <component class="org.unijena.j2k.aggregate.WeightedSumAggregator" enabled="true" name="SpatialSumAggregator" version="1.0">
                         <var attribute="area" context="J2K_optim" name="weight"/>
                         <var attribute="snowStorage_G;glacStorage;glacierRunoff;iceRunoff;rainRunoff;actET;potET;snowET_G;snowMelt_G" context="TimeLoop" name="sum"/>
-                        <var attribute="snowStorage_G;glacStorage;glacierRunoff;iceRunoff;rainRunoff;actET;potET;snowET_G;snowMelt_G" context="HRULoop" name="value"/>
+                        <var attribute="actET;glacStorage;glacierRunoff;iceRunoff;potET;rainRunoff;snowET_G;snowMelt;snowTotSWE" context="HRULoop" name="value"/>
                     </component>
                 </contextcomponent>
                 <contextcomponent class="jams.components.core.Context" enabled="true" name="NormalBlock" version="1.0_0">
