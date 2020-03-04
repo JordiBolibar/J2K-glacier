@@ -71,15 +71,15 @@ import jams.model.*;
             description = "the actual rainfall",
             unit="L/m^2"
             )
-            public Attribute.Double rain;
+            public Attribute.Double netRain;
 
-    @JAMSVarDescription(
-            access = JAMSVarDescription.AccessType.READ,
-            update = JAMSVarDescription.UpdateType.RUN,
-            description = "the actual snowfall",
-            unit="L/m^2"
-            )
-            public Attribute.Double snow;
+//    @JAMSVarDescription(
+//            access = JAMSVarDescription.AccessType.READ,
+//            update = JAMSVarDescription.UpdateType.RUN,
+//            description = "the actual snowfall",
+//            unit="L/m^2"
+//            )
+//            public Attribute.Double snow;
 
         @JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READ,
@@ -324,46 +324,46 @@ import jams.model.*;
  //if (time.equals(c) && (id.getValue() == 1787)) {
         if ((meltTemp > tbase.getValue()) && (snowStor == 0)) {
             if (this.meltFormula.getValue() == 1) {
-				getModel().getRuntime().println("fire in the hole 1");
                 iceMelt = (1 / n) * this.ddfIce.getValue() * (meltTemp - this.tbase.getValue());
                 iceMelt = iceMelt * this.area.getValue();
             }
 
             if (this.meltFormula.getValue() == 2) {
-				getModel().getRuntime().println("fire in the hole 2");
                 iceMelt = (1 / n) * (this.meltFactorIce.getValue()) * (meltTemp - this.tbase.getValue());
                 iceMelt = iceMelt * this.area.getValue();
             }
         } else {
-			getModel().getRuntime().println("fire in the hole 3");
             iceMelt = 0;
         }
-		getModel().getRuntime().println("this.slope.getValue(): " + this.slope.getValue());
-		getModel().getRuntime().println("this.slopeThreshold.getValue(): " + this.slopeThreshold.getValue());
-		getModel().getRuntime().println("this.elevation.getValue(): " + this.elevation.getValue());
-		getModel().getRuntime().println("this.elevationThreshold.getValue(): " + this.elevationThreshold.getValue());
+		//getModel().getRuntime().println("this.slope.getValue(): " + this.slope.getValue());
+		//getModel().getRuntime().println("this.slopeThreshold.getValue(): " + this.slopeThreshold.getValue());
+		//getModel().getRuntime().println("this.elevation.getValue(): " + this.elevation.getValue());
+		//getModel().getRuntime().println("this.elevationThreshold.getValue(): " + this.elevationThreshold.getValue());
 		
 		if (this.slope.getValue() < this.slopeThreshold.getValue() &&
                 this.elevation.getValue() < this.elevationThreshold.getValue()) {
-			getModel().getRuntime().println("fire in the hole 4");
             iceMelt = iceMelt - (iceMelt * this.debrisFactor.getValue()/10) ;
         }
 		else {
-			getModel().getRuntime().println("fire in the hole 5");
 			iceMelt = iceMelt;
 		}
 		
-		getModel().getRuntime().println("iceMelt: "+iceMelt );
-		getModel().getRuntime().println("SAC: "+SAC );
-        iceMelt = iceMelt *  SAC;
+		// No use of SAC in this version
+        //iceMelt = iceMelt *  SAC;
 
         totalMelt = snowMelt.getValue() + iceMelt;
+
+		getModel().getRuntime().println("-----------------------");
+		getModel().getRuntime().println("");
 		getModel().getRuntime().println("Total melt: "+totalMelt );
 
-		double allIn = snowMelt.getValue() + this.rain.getValue();
+		double allIn = snowMelt.getValue() + this.netRain.getValue();
 		getModel().getRuntime().println("Ice melt: "+ iceMelt );
 		getModel().getRuntime().println("Snow melt: "+ snowMelt.getValue() );
 		getModel().getRuntime().println("Snow melt + rain: "+allIn );
+		getModel().getRuntime().println("");
+		getModel().getRuntime().println("-----------------------");
+
 		//route runoff inside glacier
 		//snow routing
 
@@ -372,7 +372,7 @@ import jams.model.*;
 
 
 		double q_snow = this.snowRunofftm1.getValue() * Math.exp(-1/this.kSnow.getValue()) + (snowMelt.getValue()) * (1-Math.exp(-1/this.kSnow.getValue()));
-		double q_rain = this.rainRunofftm1.getValue() * Math.exp(-1/this.kRain.getValue()) + (this.rain.getValue()) * (1-Math.exp(-1/this.kRain.getValue()));
+		double q_rain = this.rainRunofftm1.getValue() * Math.exp(-1/this.kRain.getValue()) + (this.netRain.getValue()) * (1-Math.exp(-1/this.kRain.getValue()));
 		//double q_snowRain = this.snowRunofftm1.getValue() * Math.exp(-1/this.kSnow.getValue()) + (snowMelt + this.rain.getValue()) * (1-Math.exp(-1/this.kSnow.getValue()));
 		//ice routing
 		double q_ice = this.iceRunofftm1.getValue() * Math.exp(-1/this.kIce.getValue()) + iceMelt * (1-Math.exp(-1/this.kIce.getValue()));
@@ -383,10 +383,16 @@ import jams.model.*;
 		//double tot_q = q_ice + snowMelt.getValue();
 
 		double tot_q = q_ice + q_snow + q_rain;
+
+		getModel().getRuntime().println("-----------------------");
+		getModel().getRuntime().println("");
 		getModel().getRuntime().println("Ice Q: "+q_ice );
 		getModel().getRuntime().println("Snow Q: "+q_snow );
 		getModel().getRuntime().println("Rain Q: "+q_rain );
 		getModel().getRuntime().println("Total Q: "+tot_q );
+		getModel().getRuntime().println("");
+		getModel().getRuntime().println("-----------------------");
+
 		//q_ice should not be included in the balance, since it is not provided as input. otherwise, waterbalnce is wrong
         
         //this.glacStorage.setValue(glacStorage.getValue()+ allIn - q_ice - q_snow - q_rain); //why is q_ice missing in that calculation??//water balance is wrong

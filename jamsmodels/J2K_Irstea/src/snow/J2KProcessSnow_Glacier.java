@@ -86,6 +86,14 @@ import jams.model.*;
 
     
     @JAMSVarDescription(
+            access = JAMSVarDescription.AccessType.READ,
+            update = JAMSVarDescription.UpdateType.RUN,
+            description = "state variable rain",
+            unit = "L"
+            )
+            public JAMSDouble rain;
+
+	@JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READWRITE,
             update = JAMSVarDescription.UpdateType.RUN,
             description = "state variable net rain",
@@ -94,6 +102,14 @@ import jams.model.*;
             public JAMSDouble netRain;
     
     @JAMSVarDescription(
+            access = JAMSVarDescription.AccessType.READ,
+            update = JAMSVarDescription.UpdateType.RUN,
+            description = "state variable snow",
+            unit = "L"
+            )
+            public JAMSDouble snow;
+
+	@JAMSVarDescription(
             access = JAMSVarDescription.AccessType.READWRITE,
             update = JAMSVarDescription.UpdateType.RUN,
             description = "state variable net snow",
@@ -277,6 +293,12 @@ import jams.model.*;
 	        this.snowAge.setValue(0);
 	        this.snowColdContent.setValue(0.0);
 			this.snowCover.setValue(0.0);
+			
+			// Since there is no interception on glaciers we directly convert all precipitation into net rain and snow
+			//this.netRain.setValue(this.rain.getValue());
+			//this.netSnow.setValue(this.snow.getValue());
+			this.netSnow = this.snow;
+			this.netRain = this.rain;
 
     	}
     }
@@ -286,16 +308,21 @@ import jams.model.*;
 		getModel().getRuntime().println("Inside glacier block - J2KProcess_Snow_Glacier");
         
     	if(this.active == null || this.active.getValue()){
-            
+           
 	        this.run_area = this.area.getValue();
 
 	        double SAC = this.actSlAsCf.getValue();
 	        
-	        this.in_snow = this.netSnow.getValue();
-	
+	        this.in_snow = this.netSnow.getValue();	               
+			this.in_rain = this.netRain.getValue();
 
-                
-                this.in_rain = this.netRain.getValue();
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.netSnow.getValue(): " + this.netSnow.getValue());
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.netRain.getValue(): " + this.netRain.getValue());
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.snow.getValue(): " + this.snow.getValue());
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.rain.getValue(): " + this.rain.getValue());
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.in_snow: " + this.in_snow);
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.in_rain: " + this.in_rain);
+
 	        double balIn = this.in_snow + this.in_rain;
 	        
 	        double in_meanTemp = this.meanTemp.getValue();
@@ -321,7 +348,7 @@ import jams.model.*;
 	        
 	        
 	        this.run_snowMelt = 0; 
-                this.run_snowCover = 0;
+			this.run_snowCover = 0;
 	        
 	        
 	        run_coldContent = run_coldContent + this.calcColdContent(in_meanTemp, coldContentFactor);
@@ -334,7 +361,7 @@ import jams.model.*;
 	        }
 	        
 	        if(in_snow > 0){
-// we want to have the snow accumulation at each timestep
+			// we want to have the snow accumulation at each timestep
 	            this.calcSnowAccumulation(in_meanTemp, run_area, critDens);
 	        }
 	        
@@ -351,18 +378,16 @@ import jams.model.*;
                 
                 
 	        this.calcSnowDensities(run_area);
-	        
-	        this.netRain.setValue(this.in_rain);
-	        this.netSnow.setValue(this.in_snow);
+
+	        // Why the hell is this done if in_rain and in_snow are always set to 0???????
+	        //this.netRain.setValue(this.in_rain);
+	        //this.netSnow.setValue(this.in_snow);
 	        this.snowTotSWE.setValue(this.run_totSWE);
 	        this.drySWE.setValue(this.run_drySWE);
 	        this.totDens.setValue(this.run_totDens);
 	        this.dryDens.setValue(this.run_dryDens);
 	        this.snowDepth.setValue(this.run_snowDepth);
-                this.snowCover.setValue(this.run_snowCover);
-           
-      
-            
+			this.snowCover.setValue(this.run_snowCover);
     
 	        this.snowAge.setValue(this.run_snowAge);
 	        this.snowColdContent.setValue(this.run_coldContent);
@@ -382,6 +407,15 @@ import jams.model.*;
 	            getModel().getRuntime().println("balOut: " + balOut);
 	            getModel().getRuntime().println("shit!");
 	        }
+
+			getModel().getRuntime().println("-----------------------");
+			getModel().getRuntime().println("");
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.netRain: " + this.netRain);
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.netSnow: " + this.netSnow);
+			getModel().getRuntime().println("J2KProcessSnow_Glacier this.run_snowMelt: " + this.run_snowMelt);
+			getModel().getRuntime().println("");
+			getModel().getRuntime().println("-----------------------");
+
 	        //if(this.run_drySWE > this.run_totSWE)
 	        //    System.out.getRuntime().println("dry is larger than tot at end at time: " + time.toString() + " in entity: " + entity.getDouble("ID"));
 	        if(this.run_snowMelt < 0)
