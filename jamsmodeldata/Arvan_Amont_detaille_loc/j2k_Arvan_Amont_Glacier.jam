@@ -25,6 +25,7 @@
     <datastores>
         <outputdatastore context="TimeLoop" enabled="true" name="TimeLoop">
             <trace>
+                <attribute id="tmean"/>
                 <attribute id="precip"/>
                 <attribute id="rain"/>
                 <attribute id="snow"/>
@@ -32,15 +33,29 @@
                 <attribute id="snowTotSWE"/>
                 <attribute id="reachStation"/>
                 <attribute id="catchmentSimRunoff"/>
+                <attribute id="catchmentSimRunoff_qm"/>
                 <attribute id="glacierRunoff"/>
                 <attribute id="snowMelt"/>
                 <attribute id="netRain"/>
                 <attribute id="netSnow"/>
                 <attribute id="iceRunoff"/>
-                <attribute id="tmean"/>
+                <attribute id="RD1_reachStation"/>
+                <attribute id="RD1_reachStation2"/>
+                <attribute id="RD2_reachStation"/>
+                <attribute id="RD2_reachStation2"/>
+                <attribute id="RG1_reachStation"/>
+                <attribute id="RG1_reachStation2"/>
+                <attribute id="catchmentRD1"/>
+                <attribute id="catchmentRD1_qm"/>
+                <attribute id="catchmentRD2"/>
+                <attribute id="catchmentRD2_qm"/>
+                <attribute id="catchmentRG1"/>
+                <attribute id="catchmentRG1_qm"/>
+                <attribute id="catchmentRG2"/>
+                <attribute id="catchmentRG2_qm"/>
             </trace>
         </outputdatastore>
-        <outputdatastore context="ReachLoop" enabled="false" name="ReachLoop">
+        <outputdatastore context="ReachLoop" enabled="true" name="ReachLoop">
             <trace>
                 <attribute id="simRunoff"/>
             </trace>
@@ -67,11 +82,19 @@
                 <attribute id="snowDepth"/>
                 <attribute id="snowMelt"/>
                 <attribute id="snowTotSWE"/>
+                <attribute id="inRD1"/>
+                <attribute id="inRD2"/>
+                <attribute id="inRG1"/>
+                <attribute id="inRG2"/>
+                <attribute id="outRD1"/>
+                <attribute id="outRD2"/>
+                <attribute id="outRG1"/>
+                <attribute id="outRG2"/>
             </trace>
         </outputdatastore>
     </datastores>
     <preprocessors>
-        <metaprocessor class="jams.components.concurrency.ConcurrentContextProcessor" context="HRULoop" enabled="true">
+        <metaprocessor class="jams.components.concurrency.ConcurrentContextProcessor" context="HRULoop" enabled="false">
             <property name="partitioner_class" value="jams.components.concurrency.EntityPartitioner"/>
             <property name="exclude_component" value="HRU2ReachRouting;J2KProcessRouting;SpatialWeightedSumAggregator1;SpatialWeightedSumAggregator2"/>
             <property name="scale_factor" value="1"/>
@@ -374,16 +397,6 @@
                 <var attribute="tmean" context="HRULoop" name="tmean"/>
                 <var attribute="snow_trans" context="J2K_optim" name="snow_trans"/>
             </component>
-            <component class="org.unijena.j2k.snow.CalcRainSnowParts" enabled="false" name="CalcRainSnowParts" version="1.0_0">
-                <var attribute="area" context="HRULoop" name="area"/>
-                <var attribute="snow_trs" context="J2K_optim" name="snow_trs"/>
-                <var attribute="rain" context="HRULoop" name="rain"/>
-                <var attribute="precip" context="HRULoop" name="precip"/>
-                <var attribute="snow" context="HRULoop" name="snow"/>
-                <var attribute="tmin" context="HRULoop" name="tmin"/>
-                <var attribute="tmean" context="HRULoop" name="tmean"/>
-                <var attribute="snow_trans" context="J2K_optim" name="snow_trans"/>
-            </component>
             <contextcomponent class="jams.components.conditional.DoubleConditionalContext" enabled="true" name="DoubleConditionalContext1" version="1.0_1">
                 <var name="value2" value="7"/>
                 <var attribute="landuseID" context="HRULoop" name="value1"/>
@@ -463,8 +476,8 @@
                     </component>
                     <component class="org.unijena.j2k.aggregate.WeightedSumAggregator" enabled="true" name="SpatialSumAggregator" version="1.0">
                         <var attribute="area" context="J2K_optim" name="weight"/>
-                        <var attribute="actET;glacStorage;glacierRunoff;iceRunoff;netRain;netSnow;potET;rain;rainRunoff;snow;snowET_G;snowMelt;snowStorage_G" context="TimeLoop" name="sum"/>
-                        <var attribute="actET;glacStorage;glacierRunoff;iceRunoff;netRain;netSnow;potET;rain;rainRunoff;snow;snowET_G;snowMelt;snowTotSWE" context="HRULoop" name="value"/>
+                        <var attribute="actET;glacStorage;glacierRunoff;iceRunoff;inRD1;netRain;netSnow;potET;rain;rainRunoff;snow;snowET_G;snowMelt;snowStorage_G" context="TimeLoop" name="sum"/>
+                        <var attribute="actET;glacStorage;glacierRunoff;iceRunoff;inRD1;netRain;netSnow;potET;rain;rainRunoff;snow;snowET_G;snowMelt;snowTotSWE" context="HRULoop" name="value"/>
                     </component>
                 </contextcomponent>
                 <contextcomponent class="jams.components.core.Context" enabled="true" name="NormalBlock" version="1.0_0">

@@ -131,11 +131,11 @@ import jams.model.*;
         this.snow.setValue(snow);
         this.rain.setValue(rain);
 		
-		getModel().getRuntime().println("CalcRainSnowParts temperature: "+ temperature );
-		getModel().getRuntime().println("CalcRainSnowParts pSnow: "+ pSnow );
-		getModel().getRuntime().println("CalcRainSnowParts precip: "+this.precip );
-		getModel().getRuntime().println("CalcRainSnowParts rain: "+this.rain );
-		getModel().getRuntime().println("CalcRainSnowParts snow: "+this.snow );
+		//getModel().getRuntime().println("CalcRainSnowParts temperature: "+ temperature );
+		//getModel().getRuntime().println("CalcRainSnowParts pSnow: "+ pSnow );
+		//getModel().getRuntime().println("CalcRainSnowParts precip: "+this.precip );
+		//getModel().getRuntime().println("CalcRainSnowParts rain: "+this.rain );
+		//getModel().getRuntime().println("CalcRainSnowParts snow: "+this.snow );
         
     }
     
